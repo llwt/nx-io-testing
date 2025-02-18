@@ -6,7 +6,7 @@
     "build": {
       "cache": true,
       "executor": "nx:run-commands",
-      "inputs": ["{projectRoot}/src/**/*"],
+      "inputs": ["{projectRoot}/src/"],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}/build"],
       "options": {
         "commands": [
@@ -16,11 +16,27 @@
         "parallel": false
       }
     },
-    "package": {
-      "dependsOn": ["build"],
+    "build-static": {
       "cache": true,
       "executor": "nx:run-commands",
-      "inputs": [{ "dependentTasksOutputFiles": "**/*" }],
+      "inputs": ["{projectRoot}/src-static/"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/build-static"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/{projectRoot}/build-static",
+          "echo 'foo-2' > dist/{projectRoot}/build-static/foo.txt"
+        ],
+        "parallel": false
+      }
+    },
+    "package": {
+      "dependsOn": ["build", "build-static"],
+      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": [
+        { "dependentTasksOutputFiles": "dist/{projectRoot}/build-static/**/*" },
+        { "dependentTasksOutputFiles": "dist/{projectRoot}/build/**/*" }
+      ],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}/package"],
       "options": {
         "commands": [
