@@ -1,0 +1,48 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "project-a",
+  "sourceRoot": "packages/project-a/src",
+  "targets": {
+    "build": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": ["{projectRoot}/src/**/*"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/build"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/{projectRoot}/build",
+          "cp -r {projectRoot}/src/* dist/{projectRoot}/build"
+        ],
+        "parallel": false
+      }
+    },
+    "package": {
+      "dependsOn": ["build"],
+      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": [{ "dependentTasksOutputFiles": "**/*" }],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/package"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/{projectRoot}/package",
+          "cp -r dist/{projectRoot}/build/* dist/{projectRoot}/package"
+        ],
+        "parallel": true
+      }
+    },
+    "repackage": {
+      "dependsOn": ["package"],
+      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": [{ "dependentTasksOutputFiles": "**/*" }],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}/repackage"],
+      "options": {
+        "commands": [
+          "mkdir -p dist/{projectRoot}/repackage",
+          "cp -r dist/{projectRoot}/build/* dist/{projectRoot}/repackage"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}
