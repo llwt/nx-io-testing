@@ -6,7 +6,7 @@
     "build": {
       "cache": true,
       "executor": "nx:run-commands",
-      "inputs": ["{projectRoot}/src/"],
+      "inputs": ["{projectRoot}/src/**/*"],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}/build"],
       "options": {
         "commands": [
@@ -19,7 +19,7 @@
     "build-static": {
       "cache": true,
       "executor": "nx:run-commands",
-      "inputs": ["{projectRoot}/src-static/"],
+      "inputs": ["{projectRoot}/src-static/**/*"],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}/build-static"],
       "options": {
         "commands": [
