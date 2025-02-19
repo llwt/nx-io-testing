@@ -34,8 +34,10 @@
       "cache": true,
       "executor": "nx:run-commands",
       "inputs": [
-        { "dependentTasksOutputFiles": "dist/{projectRoot}/build-static/**/*" },
-        { "dependentTasksOutputFiles": "dist/{projectRoot}/build/**/*" }
+        {
+          "dependentTasksOutputFiles": "dist/packages/project-a/build-static/**/*"
+        },
+        { "dependentTasksOutputFiles": "dist/packages/project-a/build/**/*" }
       ],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}/package"],
       "options": {
